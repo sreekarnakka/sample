@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Feedback Report</title>
+    <style>
+        /* Add your custom styles for the PDF here */
+        body {
+            font-family: Arial, sans-serif;
+        }
+        h1 {
+            font-size: 24px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+        strong {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Feedback Report for {{ event_title }}</h1>
+
+    {% if feedbacks %}
+        <ul>
+            {% for feedback in feedbacks %}
+                <li>
+                    <strong>Name:</strong> {{ feedback.name }}<br>
+                    <strong>Email:</strong> {{ feedback.email }}<br>
+                    <strong>Feedback:</strong> {{ feedback.feedback }}<br>
+                    <br>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No feedback available for this event.</p>
+    {% endif %}
+</body>
+</html>

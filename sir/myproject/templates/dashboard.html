@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <!-- Add Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Custom CSS Styles */
+        body {
+            background-color: #f8f9fa;
+        }
+        .sidebar {
+            background-color: #343a40;
+            color: #ffffff;
+            height: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            padding-top: 20px;
+        }
+        .sidebar a {
+            padding: 10px 15px;
+            text-decoration: none;
+            font-size: 20px;
+            color: #ffffff;
+            display: block;
+        }
+        .sidebar a:hover {
+            background-color: #007bff;
+        }
+        .content {
+            margin-left: 250px;
+            padding: 20px;
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.10.1/fullcalendar.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.10.1/fullcalendar.min.css">
+
+</head>
+<body>
+    <div class="sidebar">
+        <h2>Admin Dashboard</h2>
+        <a href="{% url 'admin_lectures' %}">Lectures & Seminars</a>
+        <a href="{% url 'admin_std_events' %}">Student Execlusive Events</a>
+        <a href="{% url 'admin_fac_events' %}" >Faculty Exclusive Events</a>
+        <!-- <a href="#responses" onclick="showPage('dashboard')">Dashboard</a> -->
+        <a href="{% url 'admin_calender' %}">Requests</a>
+        <a href="{% url 'cal' %}">calender Settings</a>
+        <a href="{% url 'newsreport' %}">News Report</a>
+        <a href="{% url 'home' %}">Log Out</a>
+    </div>
+
+    <div class="content">
+        <h1>Welcome to the Dashboard</h1>
+        <!--  -->
+
+
+
+        </div>
+    </div>
+
+    <!-- Add Bootstrap JS and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.10.1/fullcalendar.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.10.1/fullcalendar.min.css">
+
+
+</body>
+</html>

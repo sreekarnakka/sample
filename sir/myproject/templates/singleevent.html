@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Details</title>
+    <!-- Include Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Custom CSS -->
+    <style>
+        body {
+            background-color: #f8f9fa;
+            padding: 20px;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            color: #333;
+        }
+        .event-details {
+            margin-bottom: 20px;
+        }
+        .feedback-form {
+            margin-top: 20px;
+        }
+        .form-group label {
+            font-weight: bold;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+        .invalid-feedback {
+            color: #dc3545;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Event Details</h2>
+        <div class="event-details">
+            <h3>Event Name</h3>
+            <p>Date: <strong>Event Date</strong></p>
+            <p>Time: <strong>Event Time</strong></p>
+            <p>Location: <strong>Event Location</strong></p>
+            <p>Description: <strong>Event Description</strong></p>
+        </div>
+
+        <h2>Feedback Form</h2>
+        <form id="feedbackForm" class="feedback-form">
+            <div class="form-group">
+                <label for="name">Your Name:</label>
+                <input type="text" class="form-control" id="name" name="name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" class="form-control" id="email" name="email" required>
+            </div>
+
+            <div class="form-group">
+                <label for="feedback">Your Feedback:</label>
+                <textarea class="form-control" id="feedback" name="feedback" rows="4" required></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Submit Feedback</button>
+        </form>
+
+        <!-- Add a link to download feedback as CSV -->
+        <a id="downloadLink" style="display: none;">Download Feedback (CSV)</a>
+    </div>
+
+    <!-- Include Bootstrap and jQuery scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- JavaScript for form submission and CSV download -->
+    <script>
+        // Your form submission logic here
+        $('#feedbackForm').submit(function (e) {
+            e.preventDefault();
+            // Handle form submission and data storage here
+            // ...
+
+            // Once feedback is submitted and stored, generate CSV data
+            const feedbackData = [
+                ['Name', 'Email', 'Feedback'],
+                [$('#name').val(), $('#email').val(), $('#feedback').val()]
+            ];
+            const csvContent = feedbackData.map(row => row.join(',')).join('\n');
+
+            // Create a Blob with the CSV data
+            const blob = new Blob([csvContent], { type: 'text/csv' });
+
+            // Create a download link for the CSV file
+            const downloadLink = document.getElementById('downloadLink');
+            downloadLink.href = window.URL.createObjectURL(blob);
+            downloadLink.download = 'feedback.csv';
+            downloadLink.style.display = 'block';
+        });
+    </script>
+</body>
+</html>

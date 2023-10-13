@@ -1,0 +1,1122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Request Form</title>
+    <!-- Include Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Include Bootstrap date picker CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" rel="stylesheet"/>
+    <!-- FullCalendar CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.8.0/main.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <style>
+        /* Add your custom styles here */
+        /* ... */
+        nav {
+            background-color: #343a40;
+            color: #ffffff;
+        }
+        nav ul {
+            padding: 0;
+            list-style: none;
+        }
+        nav ul li {
+            display: inline;
+            margin-right: 20px;
+        }
+        nav ul li a {
+            text-decoration: none;
+            color: #ffffff;
+        }
+        .col-lg-6 {
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+
+    </style>
+</head>
+<body>
+    <!-- Your navigation menu or header goes here -->
+    <!-- ... -->
+    <nav class="navbar navbar-expand-lg">
+        <ul class="navbar-nav">
+            <li class="nav-item"><a class="nav-link" href="{% url 'user_home' %}">Home</a></li>
+            <!-- <li class="nav-item"><a class="nav-link" href="{% url 'lec_login' %}">Seminars/Webinars</a></li> -->
+            <li class="nav-item"><a class="nav-link" href="{% url 'std_login' %}">Student Exclusive Events</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'fac_login' %}">Faculty Exclusive Events</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'requestform' %}" style="background-color: grey;">Requestforms</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'usercal' %}">Calender</a></li>
+
+        </ul>
+        <button class="btn btn-light ml-auto"><a class="btn btn-light ml-auto" href="{% url 'home' %}">Log Out</a></button>
+
+    </nav>
+<br>
+    <div class="container" style="align-items: center;">
+        <div class="row">
+            <!-- Form on the left side -->
+
+
+            <div class="col-lg-6" >
+            <h2 class="mt-4">Request Form</h2>
+                <form id="requestForm" class="container-form" method="post" action="{% url 'submit_request' %}">
+                    <!-- Form content here -->
+                    {% csrf_token %}
+                    <!-- ... (same form content as in your previous code) -->
+
+                    <div class="form-group">
+                        <label for="collegeName">College Name:</label>
+                        <input type="text" class="form-control" id="collegeName" name="college_name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="days">Number of Days:</label>
+                        <input type="text" class="form-control" name="number_of_days">
+                    </div>
+                    <div class="form-group">
+                        <label for="date">Date:</label>
+                        <input type="date" class="form-control" id="date" name="date">
+                    </div>
+                    <div class="form-group">
+                        <label for="modeOfEvent">Mode :</label>
+                        <select class="form-control" id="modeOfEvent" name="mode_of_event" required>
+                            <option value="Full day">Offline</option>
+                            <option value="Half day">Online</option>
+                        </select>
+                    </div>
+
+                    <!-- Program Type -->
+                    <div class="form-group">
+                        <label for="programType">Program Type:</label>
+                        <select class="form-control" id="programType" name="program_type" required>
+                            <!-- <option value="Guest Lecture">Guest Lecture</option> -->
+                            <option value="Faculty Development Program">Faculty Development Program</option>
+                            <option value="Student Development Program">Student Development Program</option>
+                        </select>
+                    </div>
+
+                    <!-- Program Topic -->
+                    <div class="form-group">
+                        <label for="programTopic">Program Topic:</label>
+                        <input type="text" class="form-control" id="programTopic" name="program_topic" required>
+                    </div>
+
+                    <!-- Program Duration -->
+                    <div class="form-group">
+                        <label for="programDuration">Program Duration</label>
+                        <select class="form-control" id="programDuration" name="program_duration" required>
+                            <option value="Full day">Full day</option>
+                            <option value="Half day">Half day</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="startTime">Program Timings:</label>
+                        <div class="input-group">
+                            <input type="time" class="form-control" id="startTime" name="start_time" placeholder="From" required>
+                            <input type="time" class="form-control" id="endTime" name="end_time" placeholder="To" required>
+                        </div>
+                    </div>
+
+                    <!-- Course Selection -->
+                    <div class="form-group">
+                        <label for="course">Course:</label>
+                        <select class="form-control" id="course" name="course">
+                            <option value="select course">Select course</option>
+                            <option value="B Tech">B Tech</option>
+                            <option value="B Pharmacy">B Pharmacy</option>
+                            <option value="MBA">MBA</option>
+                            <option value="BBA">BBA</option>
+                            <option value="B Com">B Com</option>
+                            <option value="BA">BA</option>
+                            <option value="B Sc">B Sc</option>
+                        </select>
+                    </div>
+
+                    <!-- Year, Branch, Semester -->
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label for="year">Year:</label>
+                            <select class="form-control" id="year" name="year">
+                                <option value="">Select Year</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="branch">Branch:</label>
+                            <select class="form-control" id="branch" name="branch">
+                                <option value="">Select Branch</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="semester">Semester:</label>
+                            <select class="form-control" id="semester" name="semester" >
+                                <option value="">Select Semester</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="name">Contact Person Name: </label>
+                        <input type="text" class="form-control" id="name" name="name" maxlength="128" required>
+                    </div>
+
+                    <!-- Mobile Number -->
+                    <div class="form-group">
+                        <label for="mobile">Mobile / WhatsApp Number:</label>
+                        <input type="text" class="form-control" id="mobile" name="mobile" maxlength="10" required>
+                    </div>
+
+                    <!-- Email -->
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" class="form-control" id="email" name="email" required>
+                    </div>
+
+                    <!-- Terms and Conditions Checkbox -->
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="termsAndConditions" name="terms_and_conditions" required>
+                        <label class="custom-control-label" for="termsAndConditions">
+                            I agree to the <a href="#" data-toggle="modal" data-target="#termsModal">Terms and Conditions</a>
+                        </label>
+                    </div>
+                    <!-- Submit Button -->
+                    <button type="submit" class="btn btn-primary mt-3" name="submit">Submit</button>
+                </form>
+            </div>
+
+            <!-- Calendar widget on the right side -->
+            <!-- <div class="col-lg-6">
+                <div id="calendar"></div>
+            </div> -->
+            <div class="col-lg-6">
+                <h2 class="mt-4">Student Skill Development Topics:</h2>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#studentsModal">
+                    Open Student Skill Development Topics
+                </button>
+                <br><br>
+                <h2 class="mt-4">Faculty Development Topics:</h2>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#facultyModal">
+                    Open Faculty Development Topics
+                </button>
+
+
+
+            </div>
+
+
+
+        </div>
+
+    </div>
+    <div class="modal fade" id="facultyModal" tabindex="-1" role="dialog" aria-labelledby="facultyModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="facultyModalLabel">Faculty Development Events</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!DOCTYPE html>
+                    <html>
+                    <head>
+                        <title>Student Skill Development Events</title>
+                    </head>
+                    <body>
+                        <ul>
+                            <li><strong>A</strong></li>
+
+                        <ul>
+                            <li><strong>Academic challenges in 21st Century</strong></li>
+                            <li><strong>Academic Excellence Award</strong></li>
+                            <li><strong>Academic Excellence in Improved Ecosystem</strong></li>
+                            <li><strong>Academic Governance</strong></li>
+                            <li><strong>Academic Leadership</strong></li>
+                            <li><strong>Academic LeadershipA Journey towards Teacher Career Progression</strong></li>
+                            <li><strong>Adolescent Learner</strong></li>
+                            <li><strong>Angel Investment Vs VC funding opportunity for early stage Entrepreneurs</strong></li>
+                            <li><strong>Art of Publishing</strong></li>
+                            <li><strong>Attendance Improvement</strong></li>
+                        </ul>
+                    </ul>
+                    <ul>
+                        <li><strong>B</strong></li>
+
+                        <ul>
+                            <li><strong>Best practices and Innovation in Higher Education</strong></li>
+                            <li><strong>Best Teacher</strong></li>
+                            <li><strong>Better Way</strong></li>
+                            <li><strong>Big Ideas for Better Institution</strong></li>
+                            <li><strong>Big Ideas for Great School</strong></li>
+                        </ul>
+                    </ul>
+                    <ul>
+                        <li><strong>C</strong></li>
+
+                        <ul>
+                            <li><strong>Choice Based Credit System (CBCS)</strong></li>
+                            <li><strong>CBCS Opportunities and Challenges of Implementation</strong></li>
+                            <li><strong>Challenges of Higher Education in 21st Century</strong></li>
+                            <li><strong>Changing Role of Teachers in 21st century</strong></li>
+                            <li><strong>Changing Scenario of Global Requirements</strong></li>
+                            <li><strong>Characteristics of Best Teacher</strong></li>
+                            <li><strong>Checklist for FDP</strong></li>
+                            <li><strong>Checklist for Guest Lecture</strong></li>
+                            <li><strong>Checklist for Seminar / Conference</strong></li>
+                            <li><strong>Choice Based Credit System: Need of the Hour</strong></li>
+                            <li><strong>Classroom Dynamics</strong></li>
+                            <li><strong>Class Room Management</strong></li>
+                            <li><strong>Coaching</strong></li>
+                            <li><strong>Commitment of Academician</strong></li>
+                            <li><strong>Communication Skills</strong></li>
+                            <li><strong>Consultancy Proposal</strong></li>
+                            <li><strong>Convert Ideas into Patents</strong></li>
+                            <li><strong>Cooperative Learning</strong></li>
+                            <li><strong>Counselling</strong></li>
+                            <li><strong>Creating ecosystem for best practices and Innovation in Higher Education</strong></li>
+                            <li><strong>Creative thinking to Critical thinking</strong></li>
+                            <li><strong>Critical Success factors in Entrepreneurship</strong></li>
+                            <li><strong>Cultural Conflict Management</strong></li>
+                            <li><strong>Culture of Integrity in Classroom</strong></li>
+                        </ul>
+                    </ul>
+                    <ul>
+                        <li><strong>D</strong></li>
+
+
+                        <ul>
+                            <li><strong>Dealing with Student Behavior</strong></li>
+                            <li><strong>Disaster Management</strong></li>
+                            <li><strong>Disaster Management - Leadership</strong></li>
+                            <li><strong>Disaster Mitigation</strong></li>
+                            <li><strong>Dos and Don’ts of Online Teaching</strong></li>
+                            <li><strong>Dream Professional Institute</strong></li>
+                            <li><strong>Dress Code – Need of the Hour</strong></li>
+                        </ul>
+
+                    </ul>
+                    <ul>
+                        <li><strong>E</strong></li>
+
+                        <ul>
+                            <li><strong>Education 4.0</strong></li>
+                            <li><strong>Education Management</strong></li>
+                            <li><strong>Education Quotes</strong></li>
+                            <li><strong>Educational Management Eco System</strong></li>
+                            <li><strong>Educational Psychology</strong></li>
+                            <li><strong>Effective Class Room Communication</strong></li>
+                            <li><strong>Effective Class Room Management</strong></li>
+                            <li><strong>Effective Communication Skills</strong></li>
+                            <li><strong>Effective Mentoring of Students</strong></li>
+                            <li><strong>Effective Online Class Room Management</strong></li>
+                            <li><strong>Effective Presentation Skills for High Impact</strong></li>
+                            <li><strong>Effective Teacher</strong></li>
+                            <li><strong>Effective Teaching</strong></li>
+                            <li><strong>Effective Teaching Methodologies</strong></li>
+                            <li><strong>Effective Use of AV Teaching Aids</strong></li>
+                            <li><strong>Emotional Intelligence – A Balancing Tool</strong></li>
+                            <li><strong>Entrepreneurship – Business Plan Document</strong></li>
+                            <li><strong>Environment & Biodiversity threats and solutions</strong></li>
+                            <li><strong>Evidence- based Education</strong></li>
+                            <li><strong>Evolution of Higher Education In India</strong></li>
+                            <li><strong>Excellence in Teaching</strong></li>
+                            <li><strong>Excellent Teacher</strong></li>
+                            <li><strong>Expected commitment of Academician</strong></li>
+                            <li><strong>Exploring for Excellence in Education</strong></li>
+                            <li><strong>e-Learning</strong></li>
+                        </ul>
+                    </ul>
+
+                    <ul>
+                        <li><strong>F</strong></li>
+
+                        <ul>
+                            <li><strong>Faculty Development Workshop</strong></li>
+                            <li><strong>Faculty Motivation</strong></li>
+                            <li><strong>Feedback – A Catalyst for Development</strong></li>
+                            <li><strong>Feedback from Students</strong></li>
+                            <li><strong>Finishing School</strong></li>
+                            <li><strong>Fundamental Drawbacks in Education System</strong></li>
+                            <li><strong>Good Teaching</strong></li>
+                            <li><strong>Good to Great Teacher</strong></li>
+                            <li><strong>Group Counseling Strategies</strong></li>
+                        </ul>
+                    </ul>
+                    <ul>
+                        <li><strong>H</strong></li>
+
+
+                        <ul>
+                            <li><strong>Handling Adolescent learner</strong></li>
+                            <li><strong>Health and Happiness</strong></li>
+                            <li><strong>High Impact Presentations</strong></li>
+                            <li><strong>Higher Education Opportunities and Challenges</strong></li>
+                            <li><strong>Homework</strong></li>
+                            <li><strong>How to motivate and Inspire the students</strong></li>
+                            <li><strong>Human Relations</strong></li>
+                            <li><strong>Human Values and Professional Ethics</strong></li>
+                            <li><strong>Human Values in Academic Institutions</strong></li>
+                        </ul>
+                    </ul>
+                    <ul>
+                        <li><strong>I</strong></li>
+
+
+                        <ul>
+                            <li><strong>Igniting Enthusiasm Among Students</strong></li>
+                            <li><strong>Impactful Teaching</strong></li>
+                            <li><strong>Impact of Teacher Effectiveness on Student Achievements</strong></li>
+                            <li><strong>Importance of Intellectual Property Rights (IPR)</strong></li>
+                            <li><strong>Improving Faculty Effectiveness</strong></li>
+                            <li><strong>Improving Teachers Effectiveness</strong></li>
+                            <li><strong>Industry Institution Collaboration</strong></li>
+                            <li><strong>Innovative Instructional Strategies</strong></li>
+                            <li><strong>Innovative Teaching Methodologies</strong></li>
+                            <li><strong>Institutional Effectiveness</strong></li>
+                            <li><strong>Instructional Objectives</strong></li>
+                            <li><strong>Instructional Planning</strong></li>
+                            <li><strong>Instructional Strategies</strong></li>
+                            <li><strong>Integrating Technology</strong></li>
+                            <li><strong>Intellectual Property Rights</strong></li>
+                            <li><strong>Involving Stakeholders</strong></li>
+                        </ul>
+                    </ul>
+                    <ul>
+                        <li><strong>J</strong></li>
+
+
+
+                        <ul>
+                            <li><strong>JOB vs Higher Studies after B Tech / B Pharmacy</strong></li>
+                        </ul>
+                    </ul>
+                    <ul>
+                        <li><strong>K</strong></li>
+
+
+                        <ul>
+                            <li><strong>Key Aspects of Teaching in Technical Courses</strong></li>
+                        </ul>
+                    </ul>
+                    <ul>
+                        <li><strong>L</strong></li>
+
+
+                        <ul>
+                            <li><strong>Lessons from Domestic Environment</strong></li>
+                            <li><strong>Lesson Planning and Delivery</strong></li>
+                            <li><strong>Lesson Plan Guidelines</strong></li>
+                            <li><strong>Listening</strong></li>
+                        </ul>
+                    </ul>
+                    <ul>
+                        <li><strong>M</strong></li>
+
+
+
+                        <ul>
+                            <li><strong>Management Education Expectations</strong></li>
+                            <li><strong>Media and Society</strong></li>
+                            <li><strong>Mentor Mentee Session</strong></li>
+                            <li><strong>Mentoring and Coaching</strong></li>
+                            <li><strong>Mentoring for Excellence</strong></li>
+                            <li><strong>Micro Teaching</strong></li>
+                            <li><strong>Motivating and Inspiring Students</strong></li>
+                            <li><strong>Motivating for Success in Professional Studies</strong></li>
+                            <li><strong>Multiculturalism Challenges</strong></li>
+                            <li><strong>Multi-Sensory Classroom Management</strong></li>
+                            <li><strong>My Analysis of College Education</strong></li>
+                            <li><strong>My Analysis of Present Education</strong></li>
+                            <li><strong>My Analysis of Engineering Education</strong></li>
+                            <li><strong>My Analysis of PG Education</strong></li>
+                        </ul>
+                    </ul>
+                    <ul>
+                        <li><strong>N</strong></li>
+
+
+                        <ul>
+                            <li><strong>NEP 2020 Changing Role of Teachers</strong></li>
+                            <li><strong>NEP 2020 Education for Sustainability</strong></li>
+                            <li><strong>NEP 2020 Entrepreneurship and Innovation</strong></li>
+                            <li><strong>NEP 2020 Impact on Higher Education</strong></li>
+                            <li><strong>NEP 2020 Implementation Issues and Challenges</strong></li>
+                            <li><strong>NEP 2020 Implementation in Business / Management Education</strong></li>
+                            <li><strong>NEP 2020 Implementation: The Right Roadmap</strong></li>
+                            <li><strong>NEP 2020 Implementation Plan: Multidisciplinary and Holistic Education</strong></li>
+                            <li><strong>NEP 2020 Implementation Multiple Entry and Exit System</strong></li>
+                            <li><strong>NEP 2020 Implementation with Reference to Higher Education</strong></li>
+                            <li><strong>NEP 2020 Role of Teachers in Student Life</strong></li>
+                            <li><strong>NEP 2020 Role of Teachers in TE and Inculcating Research Culture in Teaching-Learning Process</strong></li>
+                            <li><strong>NEP 2020 with a Focus on Innovation and Entrepreneurship</strong></li>
+                        </ul>
+                    </ul>
+
+                    <ul>
+                        <li><strong>O</strong></li>
+
+                        <ul>
+                            <li><strong>Orientation for Teachers</strong></li>
+                            <li><strong>Outcome-Based Teaching/Learning</strong></li>
+                            <li><strong>Outstanding Teacher</strong></li>
+                        </ul>
+                    </ul>
+                    <ul>
+                        <li><strong>P</strong></li>
+
+
+                        <ul>
+                            <li><strong>Panel Discussion Method of Teaching</strong></li>
+                            <li><strong>Parents Should Know</strong></li>
+                            <li><strong>Pedagogical Tools for Student Employability</strong></li>
+                            <li><strong>Performance Appraisal</strong></li>
+                            <li><strong>Persistence</strong></li>
+                            <li><strong>Personal Hygiene at Workplace</strong></li>
+                            <li><strong>Personal Capacity Improvement</strong></li>
+                            <li><strong>Personal Effectiveness</strong></li>
+                            <li><strong>Positive Attitude</strong></li>
+                            <li><strong>Positive Thinking</strong></li>
+                            <li><strong>Powerful Thinking</strong></li>
+                            <li><strong>Professional Ethics</strong></li>
+                            <li><strong>Presentation Skills</strong></li>
+                            <li><strong>Principles of Learning</strong></li>
+                            <li><strong>Problem-Based Learning</strong></li>
+                            <li><strong>Project-Based Teaching</strong></li>
+                            <li><strong>Professional Etiquette</strong></li>
+                            <li><strong>Professional Ethics for Faculty/Teachers</strong></li>
+                            <li><strong>Project Work</strong></li>
+                            <li><strong>Publication Skills</strong></li>
+                        </ul>
+                    </ul>
+
+                    <ul>
+                        <li><strong>Q</strong></li>
+
+                        <ul>
+                            <li><strong>Questioning – A Way to Success</strong></li>
+                        </ul>
+                    </ul>
+
+                    <ul>
+                        <li><strong>R</strong></li>
+
+                        <ul>
+                            <li><strong>Raising the Learning Bar</strong></li>
+                            <li><strong>Redefining Skill Sets for a Digital Era</strong></li>
+                            <li><strong>Reflective Teaching</strong></li>
+                            <li><strong>Research Methodology</strong></li>
+                            <li><strong>Research Oriented Teaching</strong></li>
+                            <li><strong>Retaining Top Talent</strong></li>
+                            <li><strong>Role of Faculty in Mentoring and Career Guidance</strong></li>
+                            <li><strong>Role of Faculty in Moulding Students</strong></li>
+                            <li><strong>Role of Faculty in Pandemic Times</strong></li>
+                            <li><strong>Role of ICT in Teaching and Research</strong></li>
+                            <li><strong>Role of Professional Societies in Students and Faculty Development</strong></li>
+                            <li><strong>Role of Teachers in Changing Times</strong></li>
+                            <li><strong>Roles and Responsibilities of Faculty</strong></li>
+                        </ul>
+                    </ul>
+                    <ul>
+                        <li><strong>S</strong></li>
+
+
+                        <ul>
+                            <li><strong>S&T Innovations in Imparting Skills</strong></li>
+                            <li><strong>Self-Directed Learning</strong></li>
+                            <li><strong>Self-Management and Good Health</strong></li>
+                            <li><strong>Self Motivation</strong></li>
+                            <li><strong>Shaping a Student</strong></li>
+                            <li><strong>Skill Development of Faculty</strong></li>
+                            <li><strong>Skill Set for Research Publication</strong></li>
+                            <li><strong>Soft Skills</strong></li>
+                            <li><strong>Steps to Drive Innovation Through Creativity</strong></li>
+                            <li><strong>Strategies for Academic Excellence</strong></li>
+                            <li><strong>Stress Management</strong></li>
+                            <li><strong>Student Counseling</strong></li>
+                            <li><strong>Student Engagement</strong></li>
+                            <li><strong>Student Evaluation</strong></li>
+                            <li><strong>Student Guidance & Counseling</strong></li>
+                            <li><strong>Student Study Skills</strong></li>
+                            <li><strong>Students’ Punishments – Meaning and Purpose</strong></li>
+                        </ul>
+                    </ul>
+                    <ul>
+                        <li><strong>T</strong></li>
+
+
+                        <ul>
+                            <li><strong>Teacher and Guru</strong></li>
+                            <li><strong>Teacher Appreciation</strong></li>
+                            <li><strong>Teaching Gen Y</strong></li>
+                            <li><strong>Teaching Learning</strong></li>
+                            <li><strong>Teaching Learning Methodologies</strong></li>
+                            <li><strong>Teaching Methods</strong></li>
+                            <li><strong>Teaching Methodologies</strong></li>
+                            <li><strong>Teaching Pedagogy</strong></li>
+                            <li><strong>Teaching Strategies</strong></li>
+                            <li><strong>Teaching with Technology</strong></li>
+                            <li><strong>Team Teaching</strong></li>
+                            <li><strong>Technical Writing Skills</strong></li>
+                            <li><strong>Time Management</strong></li>
+                            <li><strong>Traditional Vs Modern Teaching Methods</strong></li>
+                            <li><strong>Training</strong></li>
+                            <li><strong>Transactional Styles for Teachers</strong></li>
+                            <li><strong>Tutorials</strong></li>
+                        </ul>
+                    </ul>
+                    <ul>
+                        <li><strong>U</strong></li>
+
+
+                        <ul>
+                            <li><strong>Universal Human Values – Process for Value Education</strong></li>
+                        </ul>
+                    </ul>
+                    <ul>
+                        <li><strong>V</strong></li>
+
+
+                        <ul>
+                            <li><strong>Value Based / Oriented Education</strong></li>
+                            <li><strong>Values in Education</strong></li>
+                            <li><strong>Values and Ethics in Education</strong></li>
+                            <li><strong>Vocal Hygiene</strong></li>
+                        </ul>
+                    </ul>
+                    <ul>
+                        <li><strong>W</strong></li>
+
+
+                        <ul>
+                            <li><strong>Web Technologies for Teaching</strong></li>
+                            <li><strong>What Teacher Makes</strong></li>
+                            <li><strong>Who is a Student</strong></li>
+                            <li><strong>Who I am MAD</strong></li>
+                            <li><strong>Work Life Balance</strong></li>
+                        </ul>
+                    </ul>
+
+
+
+                    </body>
+                    </html>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="studentsModal" tabindex="-1" role="dialog" aria-labelledby="studentsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="studnetsModalLabel">Students Skill Development Events</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!DOCTYPE html>
+                    <html>
+                    <head>
+                        <title>Student Skill Development Events</title>
+                    </head>
+                    <body>
+
+                        <ul>
+                            <li><strong>A</strong></li>
+                            <ul>
+                                <li><strong>3 Cs for Quantum growth</strong></li>
+                                <li><strong>3 Is – A Turning Point – Plan your Next Step</strong></li>
+                                <li><strong>Achieving Problem Solution fit</strong></li>
+                                <li><strong>AI: Challenges and Opportunities for Societal Development</strong></li>
+                                <li><strong>Art of Anger Management</strong></li>
+                                <li><strong>Art of Giving</strong></li>
+                                <li><strong>Art of Public Speaking</strong></li>
+                                <li><strong>Art of Questioning – A way to Success</strong></li>
+                                <li><strong>Artificial Intelligence</strong></li>
+                                <li><strong>Artificial Intelligence: Evolution, Challenges and Opportunities for Societal Development</strong></li>
+                                <li><strong>Attitude Change</strong></li>
+                                <li><strong>Attitude and Behavior</strong></li>
+                                <li><strong>Attitude- The essence for a better tomorrow</strong></li>
+                            </ul>
+                        </ul>
+                        <ul>
+                            <li><strong>B</strong></li>
+                            <ul>
+                                <li><strong>Best Practice in Change</strong></li>
+                                <li><strong>Building Global Competencies</strong></li>
+                                <li><strong>Building Professional Credibility</strong></li>
+                                <li><strong>Business Communications and Presentation skills</strong></li>
+                                <li><strong>Business Etiquette and Corporate</strong></li>
+                                <li><strong>Business Intelligence – Challenges and Opportunities</strong></li>
+                                <li><strong>Business Plan Document</strong></li>
+                            </ul>
+                        </ul>
+                        <ul>
+                            <li><strong>C</strong></li>
+                            <ul>
+                                <li><strong>Campus to Corporate</strong></li>
+                                <li><strong>Career opportunities for BBA</strong></li>
+                                <li><strong>Career oriented studies and Preparation for Mgmt</strong></li>
+                                <li><strong>Career oriented studies and prospectus for B Tech</strong></li>
+                                <li><strong>Career prospects for B Tech / MBA</strong></li>
+                                <li><strong>Certificate courses for Graduates</strong></li>
+                                <li><strong>Change – A Requirement in the competitive World</strong></li>
+                                <li><strong>Change Management</strong></li>
+                                <li><strong>Classroom and Careers link</strong></li>
+                                <li><strong>Climate Change</strong></li>
+                                <li><strong>Collaborative Management</strong></li>
+                                <li><strong>Communicate your way to Success</strong></li>
+                                <li><strong>Communication Skills</strong></li>
+                                <li><strong>Communication Skills for Effective Team Work</strong></li>
+                                <li><strong>Conflict Management</strong></li>
+                                <li><strong>Confidence building</strong></li>
+                                <li><strong>Constitution of India</strong></li>
+                                <li><strong>Convert Idea to Patent</strong></li>
+                                <li><strong>Creative and Innovative</strong></li>
+                                <li><strong>Creative thinking to Critical thinking</strong></li>
+                                <li><strong>Creativity – A Necessity for Success in Career</strong></li>
+                                <li><strong>Creativity Innovation Entrepreneurship</strong></li>
+                                <li><strong>Critical Success factors in Entrepreneurship</strong></li>
+                                <li><strong>Cultivating curiosity</strong></li>
+                                <li><strong>Curiosity: The Best Teacher</strong></li>
+                            </ul>
+                        </ul>
+
+                        <ul>
+                            <li><strong>D</strong></li>
+                            <ul>
+                                <li><strong>Days</strong></li>
+                                <li><strong>Energy Conservation Day Dec 14</strong></li>
+                                <li><strong>Engineers Day Sep 15</strong></li>
+                                <li><strong>International Nurses Day May 12</strong></li>
+                                <li><strong>National Doctors Day July 1</strong></li>
+                                <li><strong>National Education Day Nov 11</strong></li>
+                                <li><strong>National Girl Child Day Jan 24</strong></li>
+                                <li><strong>National Mathematics Day Dec 22</strong></li>
+                                <li><strong>National Science Day Feb 28</strong></li>
+                                <li><strong>National Technology Day May 11</strong></li>
+                                <li><strong>National Youth Day Jan 12</strong></li>
+                                <li><strong>Organ Donation Day Aug 13</strong></li>
+                                <li><strong>ParakramDiwas Jan 23</strong></li>
+                                <li><strong>Skill Day July 15</strong></li>
+                                <li><strong>Suicide Prevention Day Sep 10</strong></li>
+                                <li><strong>Twins Day Feb 22</strong></li>
+                                <li><strong>Vijay Diwas Dec 16</strong></li>
+                                <li><strong>Water Day Mar 22</strong></li>
+                                <li><strong>Women’s Day Mar 8</strong></li>
+                                <li><strong>World Creativity and Innovation Day Apr 21</strong></li>
+                                <li><strong>World Entrepreneurs’ Day Aug 21</strong></li>
+                                <li><strong>World Intellectual Property Day Apr 26</strong></li>
+                                <li><strong>World Milk Day Jun 1</strong></li>
+                                <li><strong>World Road Victims Day Nov 3rd Sunday</strong></li>
+                                <li><strong>World Youth Skills day July 15</strong></li>
+
+                            <li><strong>Data Science</strong></li>
+                            <li><strong>Dead Horse theory</strong></li>
+                            <li><strong>Disaster Management</strong></li>
+                            <li><strong>Discipline – A Key to Success</strong></li>
+                            <li><strong>Dress Code</strong></li>
+                            <li><strong>Drug abuse and Drug addiction</strong></li>
+
+
+                        </ul>                        </ul>
+
+                        <ul>
+                            <li><strong>E</strong></li>
+                            <ul>
+                                <li><strong>Easy Difficult</strong></li>
+                                <li><strong>Effective Communication Skills for Students</strong></li>
+                                <li><strong>Effective Presentation Skills</strong></li>
+                                <li><strong>Effective Time / Self-Management</strong></li>
+                                <li><strong>Emotional Intelligence – A Life Balancing Tool</strong></li>
+                                <li><strong>Emotional Intelligence – A Catalyst in Change Management</strong></li>
+                                <li><strong>Employability Enhancement</strong></li>
+                                <li><strong>Employability Skills</strong></li>
+                                <li><strong>Employment Readiness for Budding Managers</strong></li>
+                                <li><strong>Engineering Education: Way to A Rewarding Golden Career</strong></li>
+                                <li><strong>Engineering for change</strong></li>
+                                <li><strong>Enhancing Entrepreneurial Mindset</strong></li>
+                                <li><strong>Enthusiasm – A Super Power to Success</strong></li>
+                                <li><strong>Entrepower--the power of Entrepreneurship</strong></li>
+                                <li><strong>Entrepreneur Innovation</strong></li>
+                                <li><strong>Entrepreneurial Mind-set Enhancement</strong></li>
+                                <li><strong>Entrepreneurship as a Career</strong></li>
+                                <li><strong>Entrepreneurship and Innovation Skills</strong></li>
+                                <li><strong>Entrepreneurship and Development phases</strong></li>
+                                <li><strong>Entrepreneurship as a career and building an Innovation/Product fit for Market</strong></li>
+                                <li><strong>Entrepreneurship, Incubation and Innovation</strong></li>
+                                <li><strong>Entrepreneurship Startup and innovation Skills</strong></li>
+                                <li><strong>Entrepreneurship</strong></li>
+                                <li><strong>Entrepreneurship and Innovation skills Development</strong></li>
+                                <li><strong>Expectations from Budding Pharma Professionals</strong></li>
+                                <li><strong>Expectations from Budding Managers</strong></li>
+                                <li><strong>Expectations from Budding Engineers</strong></li>
+                            </ul>
+                        </ul>
+
+                        <ul>
+                            <li><strong>F</strong></li>
+                            <ul>
+                                <li><strong>Failure – A Route to Success</strong></li>
+                                <li><strong>Fear Management and Confidence Building</strong></li>
+                                <li><strong>Final Message</strong></li>
+                            </ul>
+                            <li><strong>G</strong></li>
+                            <ul>
+                                <li><strong>Gender Sensitization</strong></li>
+                                <li><strong>GenNext Navigation through the Pandemic in pursuit of becoming Self reliant</strong></li>
+                                <li><strong>Getting the best out of MBA/PGDM</strong></li>
+                                <li><strong>Goal Setting</strong></li>
+                                <li><strong>Grooming for Hiring</strong></li>
+                                <li><strong>Group Dynamics</strong></li>
+                            </ul>
+                        </ul>
+                        <ul>
+                            <li><strong>H</strong></li>
+                            <ul>
+                                <li><strong>Health and Happiness</strong></li>
+                                <li><strong>Health, Yoga and Stress Management</strong></li>
+                                <li><strong>Heroes of invention and discovery and their contributions to the world</strong></li>
+                                <li><strong>How to choose branch in Engineering</strong></li>
+                                <li><strong>How to crack GD</strong></li>
+                                <li><strong>How to crack Interviews</strong></li>
+                                <li><strong>How to crack Placements</strong></li>
+                                <li><strong>How to overcome Laziness</strong></li>
+                                <li><strong>How to overcome loneliness</strong></li>
+                                <li><strong>Human Relations</strong></li>
+                                <li><strong>Human values</strong></li>
+                                <li><strong>Human Values and Professional Ethics</strong></li>
+                            </ul>
+                            <li><strong>I</strong></li>
+                            <ul>
+                                <li><strong>Ice Breaking</strong></li>
+                                <li><strong>Impact factors to be good Engineering Student</strong></li>
+                                <li><strong>Impact factors to be a good Pharmacy Student</strong></li>
+                                <li><strong>Impact factors of a student to become Good and Successful Engineer</strong></li>
+                                <li><strong>Importance of Career for Girls</strong></li>
+                                <li><strong>Importance of Mental Health</strong></li>
+                                <li><strong>Individual(Citizen) Social Responsibility</strong></li>
+                                <li><strong>Industry Academia Interface</strong></li>
+                                <li><strong>Innovation – A Career opportunity</strong></li>
+                                <li><strong>Building Innovation –Product Fit for Market</strong></li>
+                                <li><strong>Interpersonal Relations</strong></li>
+                                <li><strong>Invest in Yourself</strong></li>
+                            </ul>
+                            <li><strong>J</strong></li>
+                            <ul>
+                                <li><strong>JAM Session</strong></li>
+                                <li><strong>Job vs Higher Education for B Tech / B Pharmacy students</strong></li>
+                            </ul>
+                            <li><strong>L</strong></li>
+                            <ul>
+                                <li><strong>Leadership Challenges</strong></li>
+                                <li><strong>Leadership Development</strong></li>
+                                <li><strong>Leadership Skills</strong></li>
+                                <li><strong>Lean Start Up Minimum Viable Product</strong></li>
+                                <li><strong>Life Skills</strong></li>
+                                <li><strong>Lifestyle Management</strong></li>
+                                <li><strong>Listening Skills</strong></li>
+                            </ul>
+                            <li><strong>M</strong></li>
+                            <ul>
+                                <li><strong>Make A Difference (MAD)</strong></li>
+                                <li><strong>Management Education – 24 carrot Career Builder</strong></li>
+                                <li><strong>Managing Emotions</strong></li>
+                                <li><strong>ManavaSambhandhalu (human Relations)</strong></li>
+                                <li><strong>Mentoring</strong></li>
+                                <li><strong>Mis-Communications</strong></li>
+                                <li><strong>Motivational Measures</strong></li>
+                                <li><strong>Multiculturalism Challenges</strong></li>
+                            </ul>
+                        </ul>
+
+                        <ul>
+                            <li><strong>N</strong></li>
+                            <ul>
+                                <li><strong>Need of Engineering Education</strong></li>
+                                <li><strong>Networking</strong></li>
+                            </ul>
+                            <li><strong>O</strong></li>
+                            <ul>
+                                <li><strong>Parents’ Value / Parenting</strong></li>
+                                <li><strong>Personal Hygiene</strong></li>
+                                <li><strong>Personality Development</strong></li>
+                                <li><strong>Planning and Time management</strong></li>
+                                <li><strong>Positive Approach</strong></li>
+                                <li><strong>Positive Attitude – A Gateway to Success</strong></li>
+                                <li><strong>Positive Attitude – A Route to Success</strong></li>
+                                <li><strong>Positive Attitude – Passport for a Better Tomorrow</strong></li>
+                                <li><strong>Positive Attitude Entry to the corporate world</strong></li>
+                                <li><strong>Power of Mind</strong></li>
+                                <li><strong>Power of Perspective</strong></li>
+                                <li><strong>Power of Positive Attitude</strong></li>
+                                <li><strong>Power of Thinking</strong></li>
+                                <li><strong>Powerful Thinking</strong></li>
+                                <li><strong>Preparing MBA students for Marketing / Finance / HR interview</strong></li>
+                                <li><strong>Professional Credibility</strong></li>
+                                <li><strong>Professional Ethics for Engineers</strong></li>
+                                <li><strong>Professional Etiquette</strong></li>
+                                <li><strong>Project Work Development</strong></li>
+                                <li><strong>Proud to be Indian</strong></li>
+                            </ul>
+                            <li><strong>Q</strong></li>
+                            <ul>
+                                <li><strong>Questioning – A way to Success</strong></li>
+                            </ul>
+                            <li><strong>R</strong></li>
+                            <ul>
+                                <li><strong>Redefining Skill sets for a Digital Era</strong></li>
+                                <li><strong>Redefining Skill Sets for a digital Era AI and DS</strong></li>
+                                <li><strong>Resume Preparation</strong></li>
+                                <li><strong>Right fitment</strong></li>
+                                <li><strong>Role of Nano Technology in Communication Systems</strong></li>
+                                <li><strong>Role of Professional Societies in Students professional Development</strong></li>
+                                <li><strong>Roles and Responsibilities of a Citizen</strong></li>
+                                <li><strong>Rule of 24</strong></li>
+                            </ul>
+                            <li><strong>S</strong></li>
+                            <ul>
+                                <li><strong>Selection of Engineering College</strong></li>
+                                <li><strong>Self Confidence – the Key to Success</strong></li>
+                                <li><strong>Self Development</strong></li>
+                                <li><strong>Self-Management and Good Health</strong></li>
+                                <li><strong>Self Management during Pandemic Times</strong></li>
+                                <li><strong>Shaping Young Minds</strong></li>
+                                <li><strong>Significance of Management Education</strong></li>
+                                <li><strong>Signs of Maturity</strong></li>
+                                <li><strong>Six Thinking Hats</strong></li>
+                                <li><strong>Skill development program for Aspiring Engineers</strong></li>
+                                <li><strong>Skill Development Program for Aspiring Managers</strong></li>
+                                <li><strong>Spirituality & Humanity</strong></li>
+                                <li><strong>Spirituality and Religion</strong></li>
+                                <li><strong>Start Up and Stand Up</strong></li>
+                                <li><strong>Stress Management</strong></li>
+                                <li><strong>Student Study Skills</strong></li>
+                                <li><strong>Study Skills for Engineering</strong></li>
+                                <li><strong>Successful vsUnsuccessful</strong></li>
+                                <li><strong>SWOT Analysis</strong></li>
+                            </ul>
+                            <li><strong>T</strong></li>
+                            <ul>
+                                <li><strong>Team Building</strong></li>
+                                <li><strong>Think it over</strong></li>
+                                <li><strong>Thinking Skills</strong></li>
+                                <li><strong>Time Management</strong></li>
+                                <li><strong>Tools for Successful Leadership</strong></li>
+                                <li><strong>Transforming to the Next Level</strong></li>
+                                <li><strong>Triple filter test</strong></li>
+                            </ul>
+                            <li><strong>U</strong></li>
+                            <ul>
+                                <li><strong>Universal Human Values</strong></li>
+                            </ul>
+                            <li><strong>V</strong></li>
+                            <ul>
+                                <li><strong>Values as Multiplier</strong></li>
+                            </ul>
+                            <li><strong>W</strong></li>
+                            <ul>
+                                <li><strong>Water conservation</strong></li>
+                                <li><strong>Ways to develop Soft skills</strong></li>
+                                <li><strong>When to be Silent</strong></li>
+                                <li><strong>Women Empowerment</strong></li>
+                                <li><strong>Work Life Balance</strong></li>
+                            </ul>
+                        </ul>
+                    </body>
+                    </html>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Terms and Conditions Modal -->
+    <div class="modal fade" id="termsModal" tabindex="-1" role="dialog" aria-labelledby="termsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document"> <!-- Increase modal size with modal-lg -->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="termsModalLabel">Terms and Conditions</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!DOCTYPE html>
+                    <html>
+                    <head>
+                        <title>Terms and Conditions</title>
+                    </head>
+                    <body>
+                        <h1>Terms and Conditions</h1>
+                        <p><em>Don’t just <strong>invite</strong> (hire) a speaker - <strong>Invest</strong> in an experience</em></p>
+                        <p>The program will be conducted at your college as per the following terms and conditions:</p>
+                        <h2><strong>My Services</strong></h2>
+                        <ul>
+                            <li>My services are available on a <strong><em>first come first serve basis</em></strong> </b></strong></li>
+                            <li>The dates will be blocked in my diary only on receipt of confirmation mail from your Principal / Director and it will be based on mutual convenience</li>
+                            <li><em><strong>After the event you need to send soft copy of couple of photographs of the event and feedback.</strong></em>The event is complete for me only when I receive them
+                            <li><em><strong>No material will be provided</strong></em> neither soft / hard copy</li>
+                        </ul>
+                        <h2><strong>Participants per Batch</strong></h2>
+                        <ul>
+                            <li>Restrict the number of participants to <strong><b>HUNDRED</b></strong> only in the case of Student Development Program as my sessions are more of interactive and activity based. One or two faculty must sit through the session.</li>
+                            <li>Restrict the number of participants to <strong><b>SIXTY</b></strong> only in the case of FDP as my sessions are more of interactive and activity based</li>
+                            <li>Give preference to young faculty to participate in the FDP</li>
+                        </ul>
+                        <h2><strong>Seating Arrangement</strong></h2>
+                        <ul>
+                            <li>My lectures need to be arranged in the <strong><b><em>Ground floor</em></b></strong> or in the first floor. Anything above that you need to have an <em><b>elevator / lift</b></em></li>
+                            <li>Participants need to sit in a team of three / four</li>
+                            <li>Every session they need to change their teams such that they form a totally new team for each session</li>
+                            <li>Participants need to come with a <em><b>notebook and pen</b></em></li>
+                        </ul>
+                        <h2><strong>Equipment Required</strong></h2>
+                        <ul>
+                            <li>LCD projector</li>
+                            <li>Audio system to connect to my laptop as I would be playing couple of videos</li>
+                            <li>Collar mike and one hand mike</li>
+                            <li>Uninterrupted power supply / Standby power backup needed</li>
+                        </ul>
+                        <h2><strong>Food and Beverages</strong></h2>
+                        <ul>
+                            <li>Vegetarian lunch less spicy</li>
+                            <li>Tea / Coffee served must be hot</li>
+                            <li>One water bottle (room temperature) in the auditorium / seminar hall</li>
+                        </ul>
+                        <h2><strong>Financial Commitment</strong></h2>
+                        <ul>
+                            <li><strong><em>No Honorarium please</em></strong></li>
+                            <li><strong><em>No Memento please</em></strong> </li>
+                            <li><strong><em>No Bouquet please</em></strong> </li>
+                            <li>Only 10 long notebooks per day of my program, which will be <strong><em>to poor students or in orphanages</em></strong> </li>
+                        </ul>
+                        <h2><strong>Why didn’t I take money for my sessions</strong></h2>
+                        <ul>
+                            <li>To make big I need to lose short term benefit</li>
+                            <li>Some of the colleges may not invite me; their students will lose the opportunity</li>
+                            <li>I resigned my high paying job <strong><b>EIGHT</b></strong> years ahead of superannuation to take up Individual Social Responsibility</li>
+                        </ul>
+                        <h2><strong>Programs in Hyderabad</strong></h2>
+                        <ul>
+                            <li>You need to contact me <strong><b>20</b></strong> days before and the date shall be fixed based on mutual convenience</li>
+                            <li>Arrange car to pickup and drop back - local transport</li>
+                            <li><strong><b>24</b></strong> hrs before you need to inform what time you are sending vehicle to my residence</li>
+                        </ul>
+                        <h2><strong>Programs outside Hyderabad</strong></h2>
+                        <ul>
+                            <li>You need to contact me <strong><b>30</b></strong> days before and the date shall be fixed based on mutual convenience</li>
+                            <li>In case of outstation the university / college needs to book the tickets by flight or AC II tier and send them to me</li>
+                            <li>While booking the tickets please note I am a senior citizen (completed <strong><b>68</b></strong> years)</li>
+                            <li>Take care of local hospitality and accommodation</li>
+                        </ul>
+                        <h2><strong>Why My Programs</strong></h2>
+                        <ul>
+                            <li>Unmatched Expertise: FOUR decades experience, conducted <strong><b>300+</b></strong> training programs to the corporate sector</li>
+                            <li>In the last <strong><b>EIGHT</b></strong> years delivered <strong><b>1,000+</b></strong> lectures; conducted <strong><b>170+</b></strong> FDPs; and <strong><b>170+</b></strong> Student Skill Development programs and attended <strong><b>120+</b></strong> other meetings at universities and a wide range of colleges in the states of Telangana, Andhra Pradesh, Karnataka, Kerala, Maharashtra and Tamilnadu</li>
+                            <li>High Client Satisfaction: 100% programs are rated Very good to Excellent</li>
+                            <li>70% of the programs conducted in Hyderabad and 80% of the programs conducted for Engineering colleges</li>
+                            <li>Customized, practical programs: Each program is customized. Collaborate with the college to design a program focused on their critical needs (including Action Learning Programs)</li>
+                            <li>The programs consist of lectures, activities/games, exercises to be worked in teams and a couple of inspiring videos</li>
+                        </ul>
+                        <h2><strong>Risk</strong></h2>
+                        <ul>
+                            <li>In the last <strong><b>8</b></strong> years I had to cancel <strong><b>SIX (0.4%)</b></strong> events at the last moment when things have gone out of my control</li>
+                        </ul>
+                    </body>
+                    </html>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Include Bootstrap JS and other scripts here -->
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.js"></script>
+
+    <script>
+
+$('#course').change(function () {
+            var selectedCourse = $(this).val();
+            var yearOptions = {
+                'B Tech': ['1st Year', '2nd Year', '3rd Year', '4th Year','NA'],
+                'B Pharmacy': ['1st Year', '2nd Year', '3rd Year', '4th Year','NA'],
+                'MBA': ['1st Year', '2nd Year','NA'],
+                'BBA': ['1st Year', '2nd Year','NA'],
+                'B Com': ['1st Year', '2nd Year', '3rd Year','NA'],
+                'BA': ['1st Year', '2nd Year', '3rd Year','NA'],
+                'B Sc': ['1st Year', '2nd Year', '3rd Year','NA'],
+            };
+
+            var branchOptions = {
+                'B Tech': ['Computer Science', 'Electrical Engineering','Electronics and Communication Engineering' ,'Mechanical Engineering', 'Civil Engineering'],
+                'B Pharmacy': ['Pharmacy'],
+                'MBA': ['MBA'],
+                'BBA': ['BBA'],
+                'B Com': ['Commerce'],
+                'BA': ['Arts'],
+                'B Sc': ['Science'],
+            };
+
+            // Populate year dropdown based on the selected course
+            var yearDropdown = $('#year');
+            yearDropdown.empty();
+            $.each(yearOptions[selectedCourse], function (index, value) {
+                yearDropdown.append($('<option>').text(value).attr('value', value));
+            });
+
+            // Populate branch dropdown based on the selected course
+            var branchDropdown = $('#branch');
+            branchDropdown.empty();
+            $.each(branchOptions[selectedCourse], function (index, value) {
+                branchDropdown.append($('<option>').text(value).attr('value', value));
+            });
+
+            // Populate semester dropdown based on the selected course
+            var semesterDropdown = $('#semester');
+            semesterDropdown.empty();
+            for (var i = 1; i <= 2; i++) {
+                semesterDropdown.append($('<option>').text('Semester ' + i).attr('value', i));
+            }
+            semesterDropdown.append($('<option>').text('NA ' ).attr('value', 0));
+        });
+        // Initialize FullCalendar and your other scripts
+        // ...
+        $(document).ready(function () {
+        // Initialize the date picker
+        $('#date').datepicker({
+            format: 'yyyy-mm-dd', // Set the desired date format
+            autoclose: true,     // Close the datepicker when a date is selected
+        });
+
+        // ... (your other JavaScript code)
+    });
+    </script>
+</body>
+</html>
+
+
+    <!-- Include Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Include Bootstrap date picker CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" rel="stylesheet"/>
+    <!-- FullCalendar CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.8.0/main.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
