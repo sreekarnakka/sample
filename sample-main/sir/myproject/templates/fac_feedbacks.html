@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Your head content here -->
+</head>
+<body>
+    <h1>Feedbacks for {{ event_title }}</h1>
+    {% if feedbacks %}
+        <ul>
+            {% for feedback in feedbacks %}
+                <li>
+
+                    <strong>Name:</strong> {{ feedback.name }}<br>
+                    <strong>Email:</strong> {{ feedback.email }}<br>
+                    <strong>Feedback:</strong> {{ feedback.feedback }}<br>
+                    <br>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No feedback available for this event.</p>
+    {% endif %}
+    <a class="btn btn-primary" href="{% url 'generate_fac_pdf' event_title %}" target="_blank">Download PDF</a>
+
+</body>
+</html>
+

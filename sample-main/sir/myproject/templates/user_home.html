@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professor M L Sai Kumar's Portfolio</title>
+    <!-- Add Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Add your custom CSS styles here */
+        body {
+            background-color: #f8f9fa;
+        }
+        nav {
+            background-color: #343a40;
+            color: #ffffff;
+        }
+        nav ul {
+            padding: 0;
+            list-style: none;
+        }
+        nav ul li {
+            display: inline;
+            margin-right: 20px;
+        }
+        nav ul li a {
+            text-decoration: none;
+            color: #ffffff;
+        }
+        section {
+            padding: 40px;
+            margin: 20px;
+            background-color: #ffffff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Menu -->
+
+    <nav class="navbar navbar-expand-lg">
+        <ul class="navbar-nav">
+            <li class="nav-item"><a class="nav-link" href="{% url 'user_home' %}">Home</a></li>
+            <!-- <li class="nav-item"><a class="nav-link" href="{% url 'lec_login' %}">Seminars/Webinars</a></li> -->
+            <li class="nav-item"><a class="nav-link" href="{% url 'std_login' %}">Student Exclusive Events</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'fac_login' %}">Faculty Events</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'requestform' %}">Requestforms</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'usercal' %}">Calender</a></li>
+
+        </ul>
+        <button class="btn btn-light ml-auto"><a class="btn btn-light ml-auto" href="{% url 'home' %}">Log Out</a></button>
+
+    </nav>
+
+    <!-- Home Page -->
+    <section id="home">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <img src="{%static 'img/1_06.jpg'%}" alt="Professor M L Sai Kumar" class="img-fluid">
+                </div>
+                <div class="col-md-6">
+                    <h1>Prof.M L Sai Kumar </h1>
+
+                    <p>
+                        Professor Sai kumar last served as Dean - Academics for 3 years at the Institute of Public Enterprise. He served as the PG Program Director for 7 years. He served as Professor of Computer Science. He authored several books, published number of papers.
+                        Professor has put in more than three and half decades of experience. Professor has trained several batches of IAS and IPS officers on use of IT and also the corporate executives.<br><br>
+                        The Dept. of Personnel and Training, Government of India has adjudged him as the Best Trainer. He is a member on, Governing body of Eleven Engineering/Management institutes. Professor served as a member on Technical committee for TTD, SBH, IICT, NRSA, AP Technology Services, etc.He is astrong believer in Citizen Social Responsibility . He took early retirement to pursue his personal agenda of inspiring the students and young faculty, ignite their minds and involve them in career building<br>
+                    </p>
+
+                    <h2>Papers / Publications:</h2>
+                    <p>
+                        Co-author:<br>
+                        - Computer fundamentals and applications - Vijaya publishers<br>
+                        - DBASE III PLUS A guide and workbook - Macmillan India Ltd<br>
+                        - WordStar A guide and workbook - Macmillan India Ltd<br>
+                        - Lotus 1-2-3 A guide and workbook - Macmillan India Ltd<br>
+
+                        Editor:<br>
+                        - Proceedings of the National Conference on Enterprise Resource Planning.<br>
+                        - International Conference on Software Engineering.<br>
+
+
+                    </p>
+
+                    <h2>Industry Association:</h2>
+                    <p>
+                        Life member of CSI, Life member of HMA, Life Member of ISTE, life member Indian Society for Agricultural statistics.
+                    </p>
+
+                    <h2>Memberships:</h2>
+                    <p>
+                        SBH, IICT, NRSA, TTD, e-Governance awards
+                    </p>
+
+                    <h2>Achievements & Awards:</h2>
+                    <p>
+                        Fellow of CSI.<br>
+                        Adjudged as the best teacher.
+                    </p>
+
+                    <h2>Contact Information:</h2>
+                    <p>
+                        Phone: 91 - 40 - 2709 8145 / 8937<br>
+                        Fax: 91 - 40 - 2709 5478<br>
+                        Email: profsaikumar@gmail.com <br>
+                        Alternate Email: prof_saikumar@rediffmail.com
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Add your JavaScript here if needed -->
+
+    <!-- Add Bootstrap JS and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

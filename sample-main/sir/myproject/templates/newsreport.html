@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <!-- Add Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Custom CSS Styles */
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .sidebar {
+            background-color: #343a40;
+            color: #ffffff;
+            height: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            padding-top: 20px;
+        }
+        .sidebar a {
+            padding: 10px 15px;
+            text-decoration: none;
+            font-size: 20px;
+            color: #ffffff;
+            display: block;
+        }
+        .sidebar a:hover {
+            background-color: #007bff;
+        }
+        .content {
+            margin-left: 250px;
+            padding: 20px;
+        }
+        /* Highlight the active link in blue */
+        /* Highlight the active link in blue */
+
+
+
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.10.1/fullcalendar.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.10.1/fullcalendar.min.css">
+
+</head>
+<body>
+    <div class="sidebar">
+        <h2>Admin Dashboard</h2>
+        <!-- <a href="{% url 'admin_lectures' %}">Lectures & Seminars</a> -->
+        <a href="{% url 'admin_std_events' %}" id="std-events-link">Student Exclusive Events</a>
+        <a href="{% url 'admin_fac_events' %}" id="fac-events-link">Faculty Exclusive Events</a>
+        <a href="{% url 'admin_calender' %}" id="admin-calender-link">Requests</a>
+        <a href="{% url 'cal' %}" id="cal-link">Calendar Settings</a>
+        <a href="{% url 'newsreport' %}" id="newsreport-link" style="background-color: #007bff;">News Report</a>
+        <a href="{% url 'home' %}" id="home-link">Log Out</a>
+
+
+    </div>
+
+
+    <div class="content">
+        <h1>News Report</h1>
+        <form method="GET" action="{% url 'filter_events' %}">
+            <label for="month">Select Month and Year:</label>
+            <input type="month" id="month" name="month">
+            <button type="submit" id="generate-button">Generate</button>
+        </form>
+        <div id="selected-month-year">
+            <h2 style="color: rgb(40, 10, 211);">{{ selected_date}} Events</h2>
+        </div>
+        <div id="events">
+            <h2 style="color: rgb(230, 4, 4);">Student Skill Development Programs:</h2>
+            <ul>
+                {% for event in student_events %}
+                    <li>On {{ event.date }} conducted SSDP on {{event.title}} at {{event.college}} {{ event.location }}.</li>
+                {% endfor %}
+            </ul>
+            <h2 style="color: rgb(230, 4, 4);">Faculty / Executive Development Programs:</h2>
+            <ul>
+                {% for event in faculty_events %}
+                <li>On {{ event.date }} conducted SSDP on {{event.title}} at {{event.college}} {{ event.location }}.</li>
+                {% endfor %}
+            </ul>
+            <h2 style="color: rgb(230, 4, 4);">Lectures and Seminars</h2>
+            <ul>
+                {% for event in lecture_events %}
+                <li>{{event.description}}</li>
+                {% endfor %}
+            </ul>
+
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Add a click event handler for the "Generate" button
+
+
+            // Get the current URL path
+            var currentPath = window.location.pathname;
+
+            // Remove the leading slash
+            currentPath = currentPath.substring(1);
+
+            // Add the "active" class to the corresponding link
+            $('#' + currentPath + '-link').addClass('active');
+        });
+    </script>
+
+</body>
+</html>

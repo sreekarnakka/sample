@@ -1,0 +1,480 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Request Form</title>
+    <!-- Include Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Include Bootstrap date picker CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" rel="stylesheet"/>
+    <!-- FullCalendar CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.8.0/main.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <style>
+        /* Add your custom styles here */
+        /* ... */
+    </style>
+</head>
+<body>
+    <!-- Your navigation menu or header goes here -->
+    <!-- ... -->
+
+    <div class="container">
+        <div class="row">
+            <!-- Form on the left side -->
+            <div class="col-lg-6">
+                <h2 class="mt-4">Request Form</h2>
+                <form id="requestForm" class="container-form" method="post" action="{% url 'submit_request' %}">
+                    <!-- Form content here -->
+                    {% csrf_token %}
+                    <!-- ... (same form content as in your previous code) -->
+                    <!-- Date Picker -->
+                    <div class="form-group">
+                        <label for="day">Day:</label>
+                        <input type="text" class="form-control" id="day" name="day">
+                    </div>
+
+                    <div class="form-group">
+                        <!-- <label for="date">Date:</label>
+                        <input type="text" class="form-control" id="date" name="date" required> -->
+                        <label for="date">Date:</label>
+                        <input type="date" class="form-control" id="date" name="date">
+                    </div>
+
+                    <!-- Mode and Number of Participants -->
+            <div class="form-group">
+                <label for="mode">Mode:</label>
+                <select class="form-control" id="mode" name="mode">
+                    <option>Offline</option>
+                    <option>Online</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="participants">Number of participants:</label>
+                <input type="number" class="form-control" id="participants" name="participants">
+            </div>
+
+            <!-- Contact Information -->
+            <div class="form-group">
+                <label for="contactName">Name of the Contact person:</label>
+                <input type="text" class="form-control" id="contactName" name="contactName">
+            </div>
+            <div class="form-group">
+                <label for="institution">Name of the Institution:</label>
+                <input type="text" class="form-control" id="institution" name="institution">
+            </div>
+
+            <div class="form-group">
+                <label for="mobile">Mobile / WhatsApp number:</label>
+                <input type="tel" class="form-control" id="mobile" name="mobile" pattern="[0-9]{10}">
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" class="form-control" id="email" name="email">
+            </div>
+
+            <!-- Program Type Selection -->
+            <div class="form-group">
+                <label for="programType">Select Program Type:</label>
+                <select class="form-control" id="programType" name="programType">
+                    <option value="guestLecture">Guest Lecture</option>
+                    <option value="facultyDevelopment">Faculty Development Program</option>
+                    <option value="studentDevelopment">Student Development Program</option>
+                </select>
+            </div>
+
+            <!-- Guest Lecture Details -->
+            <div id="guestLecture" style="display: none;">
+                <div class="form-group">
+                    <label for="topicGuest">Topic:</label>
+                    <input type="text" class="form-control" id="topicGuest" name="topicGuest">
+                </div>
+                <div class="form-group">
+                    <label for="durationGuest">Duration (hrs):</label>
+                    <input type="text" class="form-control" id="durationGuest" name="durationGuest">
+                </div>
+                <div class="form-group">
+                    <label for="fromTimeGuest">From:</label>
+                    <input type="text" class="form-control" id="fromTimeGuest" name="fromTimeGuest">
+                </div>
+                <div class="form-group">
+                    <label for="toTimeGuest">To:</label>
+                    <input type="text" class="form-control" id="toTimeGuest" name="toTimeGuest">
+                </div>
+                <div class="form-group">
+                    <label for="participantTypeGuest">Type of participants:</label>
+                    <select class="form-control" id="participantTypeGuest" name="participantTypeGuest">
+                        <option>Students</option>
+                        <option>Faculty</option>
+                    </select>
+                </div>
+                <div id="studentDetailsGuest" style="display: none;">
+                    <div class="form-group">
+                        <label for="courseGuest">Course:</label>
+                        <select class="form-control" id="courseGuest" name="courseGuest">
+                            <option value="select course">Select course</option>
+                            <option value="B Tech">B Tech</option>
+                            <option value="B Pharmacy">B Pharmacy</option>
+                            <option value="MBA">MBA</option>
+                            <option value="BBA">BBA</option>
+                            <option value="B Com">B Com</option>
+                            <option value="BA">BA</option>
+                            <option value="B Sc">B Sc</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="year">Year:</label>
+                        <select class="form-control" id="year" name="year">
+                            <option value="">Select Year</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="branch">Branch:</label>
+                        <select class="form-control" id="branch" name="branch" >
+                            <option value="">Select Branch</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="semester">Semester:</label>
+                        <select class="form-control" id="semester" name="semester">
+                            <option value="">Select Semester</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Faculty Development Program Details -->
+            <div id="facultyDevelopment" style="display: none;">
+                <div class="form-group">
+                    <label for="topicFaculty">Topic:</label>
+                    <input type="text" class="form-control" id="topicFaculty" name="topicFaculty">
+                </div>
+                <div class="form-group">
+                    <label for="durationFaculty">Duration:</label>
+                    <select class="form-control" id="durationFaculty" name="durationFaculty">
+                        <option>Full day</option>
+                        <option>Half day</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="fromTimeFaculty">From:</label>
+                    <input type="text" class="form-control" id="fromTimeFaculty" name="fromTimeFaculty">
+                </div>
+                <div class="form-group">
+                    <label for="toTimeFaculty">To:</label>
+                    <input type="text" class="form-control" id="toTimeFaculty" name="toTimeFaculty">
+                </div>
+            </div>
+
+            <!-- Student Development Program Details -->
+            <div id="studentDevelopment" style="display: none;">
+                <div class="form-group">
+                    <label for="topicStudent">Topic:</label>
+                    <input type="text" class="form-control" id="topicStudent" name="topicStudent">
+                </div>
+                <div class="form-group">
+                    <label for="durationStudent">Duration:</label>
+                    <select class="form-control" id="durationStudent" name="durationStudent">
+                        <option>Full day</option>
+                        <option>Half day</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="course">Course:</label>
+                    <select class="form-control course-dropdown" id="course" name="course" required>
+                        <option value="select course">Select course</option>
+                        <option value="B Tech">B Tech</option>
+                        <option value="B Pharmacy">B Pharmacy</option>
+                        <option value="MBA">MBA</option>
+                        <option value="BBA">BBA</option>
+                        <option value="B Com">B Com</option>
+                        <option value="BA">BA</option>
+                        <option value="B Sc">B Sc</option>
+                    </select>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="year">Year:</label>
+                        <select class="form-control" id="studentYear" name="studentYear" required>
+                            <option value="">Select Year</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="branch">Branch:</label>
+                        <select class="form-control" id="studentBranch" name="studentBranch" required>
+                            <option value="">Select Branch</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="semester">Semester:</label>
+                        <select class="form-control" id="studentSemester" name="studentSemester" required>
+                            <option value="">Select Semester</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+             <!-- Terms and Conditions Checkbox -->
+             <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="termsAndConditions" required>
+                <label class="custom-control-label" for="termsAndConditions">
+                    I agree to the <a href="#" data-toggle="modal" data-target="#termsModal">Terms and Conditions</a>
+                </label>
+            </div>
+                    <!-- Submit Button -->
+                    <button type="submit">Submit</button>
+            </form>
+            </div>
+
+            <!-- Calendar widget on the right side -->
+            <div class="col-lg-6">
+                <div id="calendar"></div>
+            </div>
+        </div>
+    </div>
+    <!-- Terms and Conditions Modal -->
+    <div class="modal fade" id="termsModal" tabindex="-1" role="dialog" aria-labelledby="termsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document"> <!-- Increase modal size with modal-lg -->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="termsModalLabel">Terms and Conditions</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!DOCTYPE html>
+                    <html>
+                    <head>
+                        <title>Terms and Conditions</title>
+                    </head>
+                    <body>
+                        <h1>Terms and Conditions</h1>
+                        <p><em>Don’t just <strong>invite</strong> (hire) a speaker - <strong>Invest</strong> in an experience</em></p>
+                        <p>The program will be conducted at your college as per the following terms and conditions:</p>
+                        <h2><strong>My Services</strong></h2>
+                        <ul>
+                            <li>My services are available on a <strong><em>first come first serve basis</em></strong> </b></strong></li>
+                            <li>The dates will be blocked in my diary only on receipt of confirmation mail from your Principal / Director and it will be based on mutual convenience</li>
+                            <li><em><strong>After the event you need to send soft copy of couple of photographs of the event and feedback.</strong></em>The event is complete for me only when I receive them
+                            <li><em><strong>No material will be provided</strong></em> neither soft / hard copy</li>
+                        </ul>
+                        <h2><strong>Participants per Batch</strong></h2>
+                        <ul>
+                            <li>Restrict the number of participants to <strong><b>HUNDRED</b></strong> only in the case of Student Development Program as my sessions are more of interactive and activity based. One or two faculty must sit through the session.</li>
+                            <li>Restrict the number of participants to <strong><b>SIXTY</b></strong> only in the case of FDP as my sessions are more of interactive and activity based</li>
+                            <li>Give preference to young faculty to participate in the FDP</li>
+                        </ul>
+                        <h2><strong>Seating Arrangement</strong></h2>
+                        <ul>
+                            <li>My lectures need to be arranged in the <strong><b><em>Ground floor</em></b></strong> or in the first floor. Anything above that you need to have an <em><b>elevator / lift</b></em></li>
+                            <li>Participants need to sit in a team of three / four</li>
+                            <li>Every session they need to change their teams such that they form a totally new team for each session</li>
+                            <li>Participants need to come with a <em><b>notebook and pen</b></em></li>
+                        </ul>
+                        <h2><strong>Equipment Required</strong></h2>
+                        <ul>
+                            <li>LCD projector</li>
+                            <li>Audio system to connect to my laptop as I would be playing couple of videos</li>
+                            <li>Collar mike and one hand mike</li>
+                            <li>Uninterrupted power supply / Standby power backup needed</li>
+                        </ul>
+                        <h2><strong>Food and Beverages</strong></h2>
+                        <ul>
+                            <li>Vegetarian lunch less spicy</li>
+                            <li>Tea / Coffee served must be hot</li>
+                            <li>One water bottle (room temperature) in the auditorium / seminar hall</li>
+                        </ul>
+                        <h2><strong>Financial Commitment</strong></h2>
+                        <ul>
+                            <li><strong><em>No Honorarium please</em></strong></li>
+                            <li><strong><em>No Memento please</em></strong> </li>
+                            <li><strong><em>No Bouquet please</em></strong> </li>
+                            <li>Only 10 long notebooks per day of my program, which will be <strong><em>to poor students or in orphanages</em></strong> </li>
+                        </ul>
+                        <h2><strong>Why didn’t I take money for my sessions</strong></h2>
+                        <ul>
+                            <li>To make big I need to lose short term benefit</li>
+                            <li>Some of the colleges may not invite me; their students will lose the opportunity</li>
+                            <li>I resigned my high paying job <strong><b>EIGHT</b></strong> years ahead of superannuation to take up Individual Social Responsibility</li>
+                        </ul>
+                        <h2><strong>Programs in Hyderabad</strong></h2>
+                        <ul>
+                            <li>You need to contact me <strong><b>20</b></strong> days before and the date shall be fixed based on mutual convenience</li>
+                            <li>Arrange car to pickup and drop back - local transport</li>
+                            <li><strong><b>24</b></strong> hrs before you need to inform what time you are sending vehicle to my residence</li>
+                        </ul>
+                        <h2><strong>Programs outside Hyderabad</strong></h2>
+                        <ul>
+                            <li>You need to contact me <strong><b>30</b></strong> days before and the date shall be fixed based on mutual convenience</li>
+                            <li>In case of outstation the university / college needs to book the tickets by flight or AC II tier and send them to me</li>
+                            <li>While booking the tickets please note I am a senior citizen (completed <strong><b>68</b></strong> years)</li>
+                            <li>Take care of local hospitality and accommodation</li>
+                        </ul>
+                        <h2><strong>Why My Programs</strong></h2>
+                        <ul>
+                            <li>Unmatched Expertise: FOUR decades experience, conducted <strong><b>300+</b></strong> training programs to the corporate sector</li>
+                            <li>In the last <strong><b>EIGHT</b></strong> years delivered <strong><b>1,000+</b></strong> lectures; conducted <strong><b>170+</b></strong> FDPs; and <strong><b>170+</b></strong> Student Skill Development programs and attended <strong><b>120+</b></strong> other meetings at universities and a wide range of colleges in the states of Telangana, Andhra Pradesh, Karnataka, Kerala, Maharashtra and Tamilnadu</li>
+                            <li>High Client Satisfaction: 100% programs are rated Very good to Excellent</li>
+                            <li>70% of the programs conducted in Hyderabad and 80% of the programs conducted for Engineering colleges</li>
+                            <li>Customized, practical programs: Each program is customized. Collaborate with the college to design a program focused on their critical needs (including Action Learning Programs)</li>
+                            <li>The programs consist of lectures, activities/games, exercises to be worked in teams and a couple of inspiring videos</li>
+                        </ul>
+                        <h2><strong>Risk</strong></h2>
+                        <ul>
+                            <li>In the last <strong><b>8</b></strong> years I had to cancel <strong><b>SIX (0.4%)</b></strong> events at the last moment when things have gone out of my control</li>
+                        </ul>
+                    </body>
+                    </html>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Include Bootstrap JS and other scripts here -->
+
+    <!-- Your other scripts go here -->
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.js'></script>
+    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.css' />
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $("#programType").change(function () {
+                var selectedOption = $(this).val();
+                // Hide all program type sections
+                $("#guestLecture, #facultyDevelopment, #studentDevelopment").hide();
+                // Show the selected program type section
+                $("#" + selectedOption).show();
+
+                // Hide/show student details based on program type
+                if (selectedOption === "guestLecture") {
+                    $("#studentDetailsGuest").show();
+                } else {
+                    $("#studentDetailsGuest").hide();
+                }
+            });
+        });
+
+        $('.course-dropdown').change(function () {
+    var selectedCourse = $(this).val();
+    var yearOptions = {
+        'B Tech': ['1st Year', '2nd Year', '3rd Year', '4th Year'],
+        'B Pharmacy': ['1st Year', '2nd Year', '3rd Year', '4th Year'],
+        'MBA': ['1st Year', '2nd Year'],
+        'BBA': ['1st Year', '2nd Year'],
+        'B Com': ['1st Year', '2nd Year', '3rd Year'],
+        'BA': ['1st Year', '2nd Year', '3rd Year'],
+        'B Sc': ['1st Year', '2nd Year', '3rd Year'],
+    };
+
+    var branchOptions = {
+        'B Tech': ['Computer Science', 'Electrical Engineering', 'Mechanical Engineering', 'Civil Engineering'],
+        'B Pharmacy': ['Pharmacy'],
+        'MBA': ['MBA'],
+        'BBA': ['BBA'],
+        'B Com': ['Commerce'],
+        'BA': ['Arts'],
+        'B Sc': ['Science'],
+    };
+
+    // Populate year dropdown based on the selected course
+    var yearDropdown = $('#studentYear');
+    yearDropdown.empty();
+    $.each(yearOptions[selectedCourse], function (index, value) {
+        yearDropdown.append($('<option>').text(value).attr('value', value));
+    });
+
+    // Populate branch dropdown based on the selected course
+    var branchDropdown = $('#studentBranch');
+    branchDropdown.empty();
+    $.each(branchOptions[selectedCourse], function (index, value) {
+        branchDropdown.append($('<option>').text(value).attr('value', value));
+    });
+
+    // Populate semester dropdown based on the selected course
+    var semesterDropdown = $('#studentSemester');
+    semesterDropdown.empty();
+    for (var i = 1; i <= 8; i++) {
+        semesterDropdown.append($('<option>').text('Semester ' + i).attr('value', i));
+    }
+});
+
+        // Initialize FullCalendar and your other scripts
+        // ...
+        $(document).ready(function () {
+        // Initialize the date picker
+        $('#date').datepicker({
+            format: 'yyyy-mm-dd', // Set the desired date format
+            autoclose: true,     // Close the datepicker when a date is selected
+        });
+
+        // ... (your other JavaScript code)
+    });
+        $(document).ready(function () {
+            // Initialize the FullCalendar
+            $('#calendar').fullCalendar({
+                selectable: true,
+                selectHelper: true,
+                select: function () {
+                    $('#termsModal').modal('toggle');
+                },
+                header: {
+                    left: '',
+                    center: 'title',
+                    right: 'prev, today, next'
+                },
+                buttonText: {
+                    today: 'Today',
+                    month: 'Month',
+                    week: 'Week',
+                    day: 'Day',
+                    list: 'List'
+                },
+                events: [{
+                    title: 'Seminar at CMR, Medchal',
+                    start: '2023-09-15T10:00',
+                    end: '2023-09-15T12:00',
+                    color: 'red',
+                    textColor: 'black'
+
+                },
+               {
+                    title: 'Seminar, Medchal',
+                    start: '2023-09-19T10:00',
+                    end: '2023-09-21T12:00',
+                    color: 'red',
+                    textColor: 'black'
+                }],
+                dayRender: function (date, cell) {
+                    var newdate = $.fullCalendar.formatDate(date, 'DD-MM-YYYY');
+                },
+            });
+        });
+    </script>
+</body>
+</html>
+
+<script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.js'></script>
+    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.css' />
+
+    <!-- Include Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Include Bootstrap date picker CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" rel="stylesheet"/>
+    <!-- FullCalendar CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.8.0/main.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+     <!-- Create a custom CSS file for your styles -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>

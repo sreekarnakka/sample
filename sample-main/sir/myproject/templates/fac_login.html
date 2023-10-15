@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lectures & Seminars - Professor M L Sai Kumar's Portfolio</title>
+    <!-- Add Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Custom CSS */
+        body {
+            background-color: #f8f9fa;
+        }
+        .event {
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        .event-title {
+            cursor: pointer;
+            text-decoration: underline;
+        }
+        nav {
+            background-color: #343a40;
+            color: #ffffff;
+        }
+        nav ul {
+            padding: 0;
+            list-style: none;
+        }
+        nav ul li {
+            display: inline;
+            margin-right: 20px;
+        }
+        nav ul li a {
+            text-decoration: none;
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Menu (if applicable) -->
+    <nav class="navbar navbar-expand-lg">
+        <ul class="navbar-nav">
+            <li class="nav-item"><a class="nav-link" href="{% url 'user_home'%}">Home</a></li>
+            <!-- <li class="nav-item"><a class="nav-link" href="{% url 'lec_login' %}">Lectures & Seminars</a></li> -->
+            <li class="nav-item"><a class="nav-link" href="{% url 'std_login'%}">Student Exclusive Events</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'fac_login'%}" style="background-color:grey;">Faculty Exclusive Events</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'requestform' %}">Requestforms</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'usercal' %}">Calender</a></li>
+
+        </ul>
+        <button class="btn btn-light ml-auto"><a class="btn btn-light ml-auto" href="{% url 'home' %}">Log Out</a></button>
+
+    </nav>
+
+    <!-- Live Events Page -->
+    {% for month_year, events in events_by_month.items %}
+    {% if events %}
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="mb-4">{{ month_year.0 }} {{ month_year.1 }} Events</h1>
+                    {% for event in events %}
+                    <div class="event">
+                        <h2 class="text-primary event-title">{{ event.title }}</h2>
+                        <p>
+                            <strong>Date:</strong> {{ event.date }}<br>
+                            <strong>Location:</strong> {{ event.location }}<br>
+                            <strong>Contact Person:</strong> {{ event.contact_person }}<br>
+                            <strong>Email:</strong> {{ event.email }}<br>
+                            <strong>Phone:</strong> {{ event.cell }}<br>
+                            <strong>Description:</strong> {{ event.description }}<br>
+                        </p>
+                        <button class="btn btn-primary btn-feedback" onclick="openFeedbackForm('{{ event.title }}')">Give Feedback</button>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </section>
+    {% endif %}
+    {% endfor %}
+
+    <!-- Add your JavaScript here -->
+    <script>
+    // Function to open the feedback form
+    function openFeedbackForm(eventName) {
+    document.getElementById('feedbackModal').style.display = 'block';
+    document.getElementById('eventName').innerText = eventName;
+    document.getElementById('eventTitle').value = eventName;
+}
+
+// Function to close the feedback form
+function closeFeedbackForm() {
+    document.getElementById('feedbackModal').style.display = 'none';
+}
+
+function submitFeedback() {
+    // Validate form data if needed
+    // Submit the form
+    document.getElementById('feedbackForm').submit();
+}
+    </script>
+
+    <!-- Feedback Form (hidden by default) -->
+    <div id="feedbackModal" class="modal" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Feedback Form for <span id="eventName"></span></h5>
+                    <button type="button" class="close" data-dismiss="modal" onclick="closeFeedbackForm()">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <!-- Feedback form elements go here -->
+                    <form id="feedbackForm" method="post" action="{% url 'submit_faculty_event_feedback' %}">
+                        {% csrf_token %}
+                        <input type="hidden" id="eventTitle" name="event_title" value="">
+                        <div class="form-group">
+                            <label for="name">Name:</label>
+                            <input type="text" class="form-control" id="name" name="name" placeholder="Enter your name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email:</label>
+                            <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="feedback">Feedback:</label>
+                            <textarea class="form-control" id="feedback" name="feedback_text" rows="4" placeholder="Enter your feedback" required></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="closeFeedbackForm()">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="submitFeedback()">Submit Feedback</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Bootstrap JS and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
